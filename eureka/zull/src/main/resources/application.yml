@@ -1,0 +1,15 @@
+server:
+  port: 5000
+spring:
+  application:
+    name: zull
+zuul:
+  routes:
+    service-a:
+      path: /zull/**
+    #  url: https://www.baidu.com/
+      service-id: serviceProvider
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8081/eureka/

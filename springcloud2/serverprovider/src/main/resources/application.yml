@@ -1,0 +1,20 @@
+
+server:
+  port: 8091
+spring:
+  application:
+    name: configServer
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/wangyuqiang1001/mycloudconfig.git
+          search-paths: /**
+          username: 1306237132@qq.com
+          password: 19950914mycy
+      label: master
+#连接远程git下载指定内容文件
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8081/eureka/

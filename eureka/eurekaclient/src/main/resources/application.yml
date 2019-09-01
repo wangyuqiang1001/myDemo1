@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: serviceProvider
+server:
+  port:  8090
+
+eureka:
+  server:
+    enable-replicated-request-compression: false #关闭服务保护模式
+    eviction-interval-timer-in-ms: 60000 #服务清理的时间间隔，如果超过时间不响应就代表将会被清理
+
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8081/eureka/
+    instance:
+      instance-id: xiaowang.com

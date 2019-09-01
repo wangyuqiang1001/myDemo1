@@ -1,0 +1,21 @@
+#water div{
+    display:inline-block;
+    margin-top: 40px;
+    text-align: center;
+     /*  width:128px;  */
+    width:145px;
+    padding-left:42px
+} #water p{
+    font-size:25px;
+}
+#water2 div{
+	
+    display:inline-block;
+    margin-top: 40px;
+    text-align: center;
+    width:132px;
+    padding-left:30px
+}
+#water2 p{
+    font-size:25px;
+}

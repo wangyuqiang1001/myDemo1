@@ -1,0 +1,114 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>百度地图API文档学习</title>
+    <script src="http://api.map.baidu.com/api?v=3.0&ak=G9uEYYOyOqUyYeSEhoZzPvsGGPIKFdNa"></script>
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <style>
+        *{padding:0;margin:0;}
+        html,body{height: 100%;}
+        #container{width: 100%;height:80%;}
+        .choice{
+            margin-top:10px;
+        }
+        .choice:after{
+            display: block;
+            content: "";
+            height: 0;
+            width: 0;
+            clear: both;
+        }
+        .choice ul{
+            list-style: none;
+            width: 100%;
+        }
+        .choice ul li{
+            display: inline-block;
+            background:#999;
+            padding:5px;
+            text-align: center;
+            color: white;
+            float: left;
+            width: 20%;
+            margin-left: 10%;
+            box-sizing:border-box;
+        }
+        .choice .select{
+            background: #888;
+            color: red;
+        }
+        .navtrans-view.expand a{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div id="container"></div>
+<div id="log"></div>
+<script>
+    //创建地图函数
+    var map;
+    var currentX,currentY;
+    function  ininMap(){
+        map=new BMap.Map("container");   //创建一个地图实例，HTML容器包含地图
+        var point=new BMap.Point(110.404,39.915);
+        map.centerAndZoom(point,15);
+        map.enableScrollWheelZoom();
+        map.addControl(new BMap.GeolocationControl());  // 定位控件
+        var geolocation = new BMap.Geolocation();                //百度包装好的定位库
+        geolocation.getCurrentPosition(function(r){
+            if(this.getStatus() == BMAP_STATUS_SUCCESS){
+                var mk = new BMap.Marker(r.point);
+                map.addOverlay(mk);
+                map.panTo(r.point);
+                currentX=r.point.lng;
+                currentY=r.point.lat;
+                console.log('您的位置：'+r.point.lng+','+r.point.lat);
+                addInfo();
+            }
+            else {
+                alert('failed'+this.getStatus());
+            }
+        },{enableHighAccuracy: true});
+    }
+    ininMap();
+    //为多个点添加窗口信息
+    function addInfo(){
+        var data_info = [
+            [116.417854,39.921988,"地址：北京市东城区王府井大街88号乐天银泰百货八层"],
+            [116.406605,39.921585,"地址：北京市东城区东华门大街"],
+            [116.412222,39.912345,"地址：北京市东城区正义路甲5号"],
+            [116.479128,39.914908,"地址：北京市朝阳区建国路93号院万达广场A座新世界彩旋百货F1层"],
+            [currentX,currentY,"您处于：北京市海淀区马甸东路金澳国际公寓1111号"]
+        ];
+        console.log(data_info.length+"/"+currentY+"/"+currentY);
+        var opts = {
+            width : 250,     // 信息窗口宽度
+            height: 80,     // 信息窗口高度
+            title : "位置信息" , // 信息窗口标题
+            enableMessage:true//设置允许信息窗发送短息
+        };
+        for(var i=0;i<data_info.length;i++){
+            var marker = new BMap.Marker(new BMap.Point(data_info[i][0],data_info[i][1]));  // 创建标注
+            var content = data_info[i][2];
+            map.addOverlay(marker);               // 将标注添加到地图中
+            addClickHandler(content,marker);
+        }
+        function addClickHandler(content,marker){
+            marker.addEventListener("click",function(e){
+                openInfo(content,e)}
+            );
+        }
+        function openInfo(content,e){
+            var p = e.target;
+            var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
+            var infoWindow = new BMap.InfoWindow(content,opts);  // 创建信息窗口对象
+            map.openInfoWindow(infoWindow,point); //开启信息窗口
+        }
+    }
+</script>
+</body>
+</html>

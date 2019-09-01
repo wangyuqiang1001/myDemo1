@@ -1,0 +1,17 @@
+
+
+server:
+  port: 8091
+  servlet:
+    context-path: /reciver
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    listener:
+      simple:
+        acknowledge-mode: manual
+      direct:
+        acknowledge-mode: manual
