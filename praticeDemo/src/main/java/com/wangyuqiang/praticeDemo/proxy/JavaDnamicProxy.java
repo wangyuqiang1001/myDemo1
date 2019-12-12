@@ -2,13 +2,16 @@ package com.wangyuqiang.praticeDemo.proxy;
 
 import org.springframework.cglib.proxy.Proxy;
 
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 
 /**
  * 动态代理代码：
  * 原始博客地址:   https://www.jianshu.com/p/95970b089360
+ * https://cloud.tencent.com/developer/article/1461796
  * 在我理解来看貌似就是一个基于原本类功能的实现扩展:
+ * 其实这段代码的原理还是不太理解:
  */
 public class JavaDnamicProxy {
 
